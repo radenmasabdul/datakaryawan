@@ -15,6 +15,16 @@ const UserList = () => {
     setUsers(response.data);
   };
 
+  //delete user
+  const deleteUser = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/users/${id}`);
+      getUsers();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="overflow-x-auto my-5">
@@ -42,7 +52,12 @@ const UserList = () => {
                   <Link to={`edit/${user._id}`}>
                     <button className="btn btn-info capitalize">edit</button>
                   </Link>
-                  <button className="btn btn-error capitalize">delete</button>
+                  <button
+                    onClick={() => deleteUser(user._id)}
+                    className="btn btn-error capitalize"
+                  >
+                    delete
+                  </button>
                 </td>
               </tr>
             ))}
