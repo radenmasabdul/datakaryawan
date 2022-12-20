@@ -36,6 +36,7 @@ const UserList = () => {
                 <td>{user.gender}</td>
                 <td className="flex flex-wrap gap-2">
                   <button className="btn btn-info capitalize">edit</button>
+
                   <button className="btn btn-error capitalize">delete</button>
                 </td>
               </tr>
