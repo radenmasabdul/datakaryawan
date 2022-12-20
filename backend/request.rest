@@ -1,0 +1,32 @@
+//get all users
+GET http://localhost:5000/users
+
+//get users by id
+###
+GET http://localhost:5000/users/63a1d0e3746aa3be2a802e88
+
+//create users
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "name" : "Annisa Rahmadani",
+    "email" : "annisarahmadani@gmail.com",
+    "gender" : "Female"
+}
+
+//edit users berdasarkan id
+###
+PATCH http://localhost:5000/users/63a1d0e3746aa3be2a802e88
+Content-Type: application/json
+
+{
+    "name" : "Rainisa Sofhia",
+    "email" : "rainisasofhia@gmail.com",
+    "gender" : "Female"
+}
+
+//delete users berdasarkan id
+###
+DELETE http://localhost:5000/users/63a1d0e3746aa3be2a802e88
