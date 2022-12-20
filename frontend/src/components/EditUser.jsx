@@ -1,18 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddUser = () => {
+const EditUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("Male");
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  //function add user
-  const saveUser = async (e) => {
+  useEffect(() => {
+    getUserById();
+  }, []);
+
+  //get single data
+  const getUserById = async () => {
+    const response = await axios.get(`http://localhost:5000/users/${id}`);
+    setName(response.data.name);
+    setEmail(response.data.email);
+    setGender(response.data.gender);
+  };
+
+  //function update user
+  const updateUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/users", {
+      await axios.patch(`http://localhost:5000/users/${id}`, {
         name,
         email,
         gender,
@@ -27,14 +40,14 @@ const AddUser = () => {
     <>
       <form
         className="container card w-full bg-base-100 shadow-xl py-5"
-        onSubmit={saveUser}
+        onSubmit={updateUser}
       >
         <div className="mx-6">
           <h3 className="text-lg font-bold capitalize ">
             personal data application
           </h3>
           <p className="font-normal text-black text-base capitalize my-4">
-            add new data
+            edit data
           </p>
           <p className="font-normal text-black text-base capitalize">
             full name
@@ -70,7 +83,7 @@ const AddUser = () => {
             <option value="Female">Female</option>
           </select>
           <button type="submit" className="btn btn-success my-4 text-white">
-            Save
+            Update
           </button>
         </div>
       </form>
@@ -78,4 +91,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default EditUser;

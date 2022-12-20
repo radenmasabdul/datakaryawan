@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -17,6 +18,9 @@ const UserList = () => {
   return (
     <>
       <div className="overflow-x-auto my-5">
+        <Link to="add">
+          <button className="btn btn-info my-2">Add New</button>
+        </Link>
         <table className="table table-compact table-zebra w-full">
           <thead>
             <tr>
@@ -35,8 +39,9 @@ const UserList = () => {
                 <td>{user.email}</td>
                 <td>{user.gender}</td>
                 <td className="flex flex-wrap gap-2">
-                  <button className="btn btn-info capitalize">edit</button>
-
+                  <Link to={`edit/${user._id}`}>
+                    <button className="btn btn-info capitalize">edit</button>
+                  </Link>
                   <button className="btn btn-error capitalize">delete</button>
                 </td>
               </tr>
