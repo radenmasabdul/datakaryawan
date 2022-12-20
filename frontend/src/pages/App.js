@@ -1,8 +1,14 @@
 import React from "react";
+import UserList from "../components/UserList";
 
 function App() {
   return (
-    <p>Hello World</p>
+    <>
+    <p className="container text-black capitalize text-2xl py-2 font-medium">form data karyawan</p>
+    <div className="container">
+    <UserList/>
+    </div>
+    </>
   );
 }
 
