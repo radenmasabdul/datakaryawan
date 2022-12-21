@@ -16,7 +16,6 @@ const UserList = () => {
 
   useEffect(() => {
     getUsers();
-    // getDataUsers();
   }, [page, keyword]);
 
   //get all user from api
@@ -24,7 +23,6 @@ const UserList = () => {
     const response = await axios.get(
       `http://localhost:5000/users?search_query=${keyword}&page=${page}&limit=${limit}`
     );
-    // setUsers(response.data);
     setUsers(response.data.result);
     setPage(response.data.page);
     setPages(response.data.totalPage);
@@ -43,7 +41,7 @@ const UserList = () => {
     }
   };
 
-  //function seacrh
+  //function search
   const searchData = (e) => {
     e.preventDefault();
     setPage(0);
@@ -100,15 +98,15 @@ const UserList = () => {
               value={query}
             />
           </div>
-          <div className="control">
-            <button type="submit" className="btn btn-info">
+          <div className="flex flex-wrap gap-2 my-2">
+            <button type="submit" className="btn btn-info text-white">
               Search
             </button>
+            <Link to="add">
+              <button className="btn btn-info text-white">Add New</button>
+            </Link>
           </div>
         </form>
-        <Link to="add">
-          <button className="btn btn-info my-2 text-white">Add New</button>
-        </Link>
         <section className="overflow-x-auto my-5">
           <table className="table table-compact table-zebra w-full text-center">
             <thead>

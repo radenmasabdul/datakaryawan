@@ -150,7 +150,7 @@ const EditUser = () => {
             value={national}
             onChange={(e) => setNational(e.target.value)}
           >
-            <option disabled value="gender" className="capitalize my-4">
+            <option disabled value="national" className="capitalize my-4">
               select nationality
             </option>
             <option value="Indonesia">Indonesia</option>

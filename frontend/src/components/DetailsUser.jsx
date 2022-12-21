@@ -29,32 +29,9 @@ const DetailsUser = () => {
     setNational(response.data.national);
   };
 
-  //function update user
-  const updateUser = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.patch(`http://localhost:5000/users/${id}`, {
-        nik,
-        name,
-        age,
-        birthday,
-        gender,
-        address,
-        national,
-      });
-      alert("Data Updated Successfully");
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <>
-      <form
-        className="container card w-full bg-base-100 shadow-xl py-5"
-        onSubmit={updateUser}
-      >
+      <form className="container card w-full bg-base-100 shadow-xl py-5">
         <div className="mx-6">
           <h3 className="text-lg font-bold capitalize ">
             personal data application
@@ -69,7 +46,6 @@ const DetailsUser = () => {
             className="input w-full input-bordered my-4"
             required
             value={nik}
-            onChange={(e) => setNik(e.target.value)}
             readOnly
             disabled
           />
@@ -82,7 +58,6 @@ const DetailsUser = () => {
             className="input w-full input-bordered my-4"
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
             readOnly
             disabled
           />
@@ -109,7 +84,6 @@ const DetailsUser = () => {
                 type="radio"
                 name="gender"
                 value="Female"
-                onChange={(e) => setGender(e.target.value)}
                 checked={gender === "Female"}
                 readOnly
                 disabled
@@ -126,7 +100,6 @@ const DetailsUser = () => {
             id="birthday"
             name="birthday"
             value={birthday}
-            onChange={(e) => setBirthday(e.target.value)}
             readOnly
             disabled
           ></input>
@@ -137,7 +110,6 @@ const DetailsUser = () => {
             className="textarea w-full my-4"
             placeholder="Address"
             value={address}
-            onChange={(e) => setAddress(e.target.value)}
             readOnly
             disabled
           ></textarea>
@@ -149,7 +121,6 @@ const DetailsUser = () => {
             className="select w-full my-4"
             required
             value={national}
-            onChange={(e) => setNational(e.target.value)}
             disabled
           >
             <option disabled value="national" className="capitalize my-4">
