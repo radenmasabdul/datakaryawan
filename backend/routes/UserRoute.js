@@ -8,5 +8,6 @@ router.get('/users/:id', getUsersById);
 router.post('/users', saveUser);
 router.patch('/users/:id', updateUser);
 router.delete('/users/:id', deleteUser);
+// router.get('/users', getUserData);
 
 export default router;

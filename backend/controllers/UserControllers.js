@@ -1,14 +1,15 @@
 import User from "../models/UserModels.js";
+import {Op} from "sequelize";
 
 //get all users
-export const getUsers = async (req, res) => {
-    try {
-        const users = await User.find();
-        res.json(users)
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-}
+// export const getUsers = async (req, res) => {
+//     try {
+//         const users = await User.find();
+//         res.json(users)
+//     } catch (error) {
+//         res.status(500).json({message: error.message});
+//     }
+// }
 
 //get user by id
 export const getUsersById = async (req, res) => {
@@ -49,4 +50,43 @@ export const deleteUser = async (req, res) => {
     } catch (error) {
         res.status(400).json({message: error.message});
     }
+}
+
+//seacrh data
+export const getUsers = async(req, res) =>{
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const totalRows = await User.count({
+        where:{
+            [Op.or]: [{nik:{
+                [Op.like]: '%'+search+'%'
+            }}, {name:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        }
+    }); 
+    const totalPage = Math.ceil(totalRows / limit);
+    const result = await User.find({
+        where:{
+            [Op.or]: [{nik:{
+                [Op.like]: '%'+search+'%'
+            }}, {name:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        },
+        offset: offset,
+        limit: limit,
+        order:[
+            ['id', 'DESC']
+        ]
+    });
+    res.json({
+        result: result,
+        page: page,
+        limit: limit,
+        totalRows: totalRows,
+        totalPage: totalPage
+    });
 }

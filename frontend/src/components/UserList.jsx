@@ -1,19 +1,54 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [pages, setPages] = useState(0);
+  const [rows, setRows] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [query, setQuery] = useState("");
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
     getUsers();
-  }, []);
+    // getDataUsers();
+  }, [page, keyword]);
 
   //get all user from api
   const getUsers = async () => {
-    const response = await axios.get("http://localhost:5000/users");
-    setUsers(response.data);
+    const response = await axios.get(
+      `http://localhost:5000/users?search_query=${keyword}&page=${page}&limit=${limit}`
+    );
+    // setUsers(response.data);
+    setUsers(response.data.result);
+    setPage(response.data.page);
+    setPages(response.data.totalPage);
+    setRows(response.data.totalRows);
+  };
+
+  //function pagination
+  const changePage = ({ selected }) => {
+    setPage(selected);
+    if (selected === 9) {
+      setMsg(
+        "Jika tidak menemukan data yang Anda cari, silahkan cari data dengan kata kunci spesifik!"
+      );
+    } else {
+      setMsg("");
+    }
+  };
+
+  //function seacrh
+  const searchData = (e) => {
+    e.preventDefault();
+    setPage(0);
+    setMsg("");
+    setKeyword(query);
   };
 
   //delete user
@@ -45,23 +80,13 @@ const UserList = () => {
     });
   };
 
-  //function seacrh
-  const searchHandle = async (e) => {
-    let key = e.target.value;
-    let result = await fetch(`http://localhost:5000/search/${key}`);
-    result = await result.json();
-    if (result) {
-      setUsers(result);
-    }
-  };
-
   return (
     <>
       <main className="container">
         <p className="font-medium text-black text-2xl capitalize my-2">
           employee data form
         </p>
-        <section className="card w-full bg-base-100 rounded-sm my-2">
+        <form onSubmit={searchData}>
           <div className="mx-2 my-4">
             <p className="font-medium text-base text-black capitalize">
               search
@@ -71,10 +96,16 @@ const UserList = () => {
               id="search"
               placeholder="Search here..."
               className="input w-full max-w-xs my-4"
-              onChange={searchHandle}
+              onChange={(e) => setQuery(e.target.value)}
+              value={query}
             />
           </div>
-        </section>
+          <div className="control">
+            <button type="submit" className="btn btn-info">
+              Search
+            </button>
+          </div>
+        </form>
         <Link to="add">
           <button className="btn btn-info my-2 text-white">Add New</button>
         </Link>
@@ -126,6 +157,29 @@ const UserList = () => {
               ))}
             </tbody>
           </table>
+          <p>
+            Total Rows: {rows} Page: {rows ? page + 1 : 0} of {pages}
+          </p>
+          <p className="has-text-centered has-text-danger">{msg}</p>
+          <nav
+            className="pagination is-centered"
+            key={rows}
+            role="navigation"
+            aria-label="pagination"
+          >
+            <ReactPaginate
+              previousLabel={"< Prev"}
+              nextLabel={"Next >"}
+              pageCount={Math.min(10, pages)}
+              onPageChange={changePage}
+              containerClassName={"pagination-list"}
+              pageLinkClassName={"pagination-link"}
+              previousLinkClassName={"pagination-previous"}
+              nextLinkClassName={"pagination-next"}
+              activeLinkClassName={"pagination-link is-current"}
+              disabledLinkClassName={"pagination-link is-disabled"}
+            />
+          </nav>
         </section>
       </main>
     </>
