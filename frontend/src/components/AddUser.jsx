@@ -129,7 +129,7 @@ const AddUser = () => {
             value={national}
             onChange={(e) => setNational(e.target.value)}
           >
-            <option disabled className="capitalize my-4">
+            <option disabled className="capitalize my-4" required>
               select nationality
             </option>
             <option value="Indonesia">Indonesia</option>

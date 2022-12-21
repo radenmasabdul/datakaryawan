@@ -45,16 +45,40 @@ const UserList = () => {
     });
   };
 
+  //function seacrh
+  const searchHandle = async (e) => {
+    let key = e.target.value;
+    let result = await fetch(`http://localhost:5000/search/${key}`);
+    result = await result.json();
+    if (result) {
+      setUsers(result);
+    }
+  };
+
   return (
     <>
       <main className="container">
         <p className="font-medium text-black text-2xl capitalize my-2">
           employee data form
         </p>
-        <div className="overflow-x-auto my-5">
-          <Link to="add">
-            <button className="btn btn-info my-2 text-white">Add New</button>
-          </Link>
+        <section className="card w-full bg-base-100 rounded-sm my-2">
+          <div className="mx-2 my-4">
+            <p className="font-medium text-base text-black capitalize">
+              search
+            </p>
+            <input
+              type="text"
+              id="search"
+              placeholder="Search here..."
+              className="input w-full max-w-xs my-4"
+              onChange={searchHandle}
+            />
+          </div>
+        </section>
+        <Link to="add">
+          <button className="btn btn-info my-2 text-white">Add New</button>
+        </Link>
+        <section className="overflow-x-auto my-5">
           <table className="table table-compact table-zebra w-full text-center">
             <thead>
               <tr>
@@ -102,7 +126,7 @@ const UserList = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </section>
       </main>
     </>
   );
