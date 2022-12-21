@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const EditUser = () => {
+  const [nik, setNik] = useState("");
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("Male");
+  const [age, setAge] = useState(0);
+  const [birthday, setBirthday] = useState("");
+  const [gender, setGender] = useState("");
+  const [address, setAddress] = useState("");
+  const [national, setNational] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -16,24 +21,43 @@ const EditUser = () => {
   //get single data
   const getUserById = async () => {
     const response = await axios.get(`http://localhost:5000/users/${id}`);
+    setNik(response.data.nik);
     setName(response.data.name);
-    setEmail(response.data.email);
+    setAge(response.data.age);
+    setBirthday(response.data.birthday);
     setGender(response.data.gender);
+    setAddress(response.data.address);
+    setNational(response.data.national);
   };
 
   //function update user
   const updateUser = async (e) => {
     e.preventDefault();
-    try {
-      await axios.patch(`http://localhost:5000/users/${id}`, {
-        name,
-        email,
-        gender,
-      });
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
+
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.patch(`http://localhost:5000/users/${id}`, {
+          nik,
+          name,
+          age,
+          birthday,
+          gender,
+          address,
+          national,
+        });
+        Swal.fire("Saved!", "", "success");
+        navigate("/");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+        navigate("/");
+      }
+    });
   };
 
   return (
@@ -49,6 +73,15 @@ const EditUser = () => {
           <p className="font-normal text-black text-base capitalize my-4">
             edit data
           </p>
+          <p className="font-normal text-black text-base uppercase">nik</p>
+          <input
+            type="number"
+            placeholder="Input NIK"
+            className="input w-full input-bordered my-4"
+            required
+            value={nik}
+            onChange={(e) => setNik(e.target.value)}
+          />
           <p className="font-normal text-black text-base capitalize">
             full name
           </p>
@@ -60,31 +93,80 @@ const EditUser = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <p className="font-normal text-black text-base capitalize">email</p>
-          <input
-            type="email"
-            placeholder="Input Email"
-            className="input w-full input-bordered my-4"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
           <p className="font-normal text-black text-base capitalize">gender</p>
+          <div className="form-control my-2">
+            <label className="label cursor-pointer">
+              <input
+                className="radio checked:bg-blue-500"
+                type="radio"
+                name="gender"
+                value="Male"
+                onChange={(e) => setGender(e.target.value)}
+                checked
+              />
+              <span className="label-text">Male</span>
+            </label>
+          </div>
+          <div className="form-control">
+            <label className="label cursor-pointer">
+              <input
+                className="radio checked:bg-red-500"
+                type="radio"
+                name="gender"
+                value="Female"
+                onChange={(e) => setGender(e.target.value)}
+                checked
+              />
+              <span className="label-text">Female</span>
+            </label>
+          </div>
+          <p className="font-normal text-black text-base capitalize my-2">
+            date of birth
+          </p>
+          <input
+            className="w-full my-4"
+            type="date"
+            id="birthday"
+            name="birthday"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+          ></input>
+          <p className="font-normal text-black text-base capitalize my-2">
+            address
+          </p>
+          <textarea
+            className="textarea w-full my-4"
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          ></textarea>
+          <p className="font-normal text-black text-base capitalize my-2">
+            nationality
+          </p>
           <select
+            type="dropdown"
             className="select w-full my-4"
             required
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
+            value={national}
+            onChange={(e) => setNational(e.target.value)}
           >
             <option disabled value="gender" className="capitalize my-4">
-              select gender
+              select nationality
             </option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="Indonesia">Indonesia</option>
+            <option value="Rusia">Rusia</option>
+            <option value="India">India</option>
+            <option value="China">China</option>
+            <option value="Amerika Serikat">Amerika Serikat</option>
           </select>
-          <button type="submit" className="btn btn-success my-4 text-white">
-            Update
-          </button>
+          <div className="flex flex-wrap gap-4">
+            <button type="submit" className="btn btn-success my-4 text-white">
+              Update
+            </button>
+            <Link to="/">
+              <button className="btn btn-warning my-4 text-white">Back</button>
+            </Link>
+          </div>
         </div>
       </form>
     </>

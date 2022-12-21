@@ -11,20 +11,28 @@ POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "name" : "Annisa Rahmadani",
-    "email" : "annisarahmadani@gmail.com",
-    "gender" : "Female"
+    "nik" : "3370056987450001",
+    "name" : "Lionel Messi",
+    "age" : "35",
+    "birthday" : "01 Januari 1987",
+    "gender" : "Male",
+    "address" : "Jl. Achmad Yani No. 89 Jakarta Pusat",
+    "national" : "Argentina"
 }
 
 //edit users berdasarkan id
 ###
-PATCH http://localhost:5000/users/63a1d0e3746aa3be2a802e88
+PATCH http://localhost:5000/users/63a2068e3a8c32f23dc6f15a
 Content-Type: application/json
 
 {
-    "name" : "Rainisa Sofhia",
-    "email" : "rainisasofhia@gmail.com",
-    "gender" : "Female"
+    "nik" : "3370056987450002",
+    "name" : "Cristiano Ronaldo JR",
+    "age" : "37",
+    "birthday" : "02 May 1985",
+    "gender" : "Male",
+    "address" : "Jl. Achmad Yani No. 78 Jakarta Pusat",
+    "national" : "Portugal"
 }
 
 //delete users berdasarkan id

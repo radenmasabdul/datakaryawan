@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-const AddUser = () => {
+const DetailsUser = () => {
   const [nik, setNik] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState(0);
@@ -12,12 +11,29 @@ const AddUser = () => {
   const [address, setAddress] = useState("");
   const [national, setNational] = useState("");
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  //function add user
-  const saveUser = async (e) => {
+  useEffect(() => {
+    getUserById();
+  }, []);
+
+  //get single data
+  const getUserById = async () => {
+    const response = await axios.get(`http://localhost:5000/users/${id}`);
+    setNik(response.data.nik);
+    setName(response.data.name);
+    setAge(response.data.age);
+    setBirthday(response.data.birthday);
+    setGender(response.data.gender);
+    setAddress(response.data.address);
+    setNational(response.data.national);
+  };
+
+  //function update user
+  const updateUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/users", {
+      await axios.patch(`http://localhost:5000/users/${id}`, {
         nik,
         name,
         age,
@@ -26,13 +42,7 @@ const AddUser = () => {
         address,
         national,
       });
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Your work has been saved",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      alert("Data Updated Successfully");
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -43,14 +53,14 @@ const AddUser = () => {
     <>
       <form
         className="container card w-full bg-base-100 shadow-xl py-5"
-        onSubmit={saveUser}
+        onSubmit={updateUser}
       >
         <div className="mx-6">
           <h3 className="text-lg font-bold capitalize ">
             personal data application
           </h3>
           <p className="font-normal text-black text-base capitalize my-4">
-            add new data
+            details data
           </p>
           <p className="font-normal text-black text-base uppercase">nik</p>
           <input
@@ -60,6 +70,8 @@ const AddUser = () => {
             required
             value={nik}
             onChange={(e) => setNik(e.target.value)}
+            readOnly
+            disabled
           />
           <p className="font-normal text-black text-base capitalize">
             full name
@@ -71,6 +83,8 @@ const AddUser = () => {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
+            readOnly
+            disabled
           />
           <p className="font-normal text-black text-base capitalize">gender</p>
           <div className="form-control my-2">
@@ -81,6 +95,9 @@ const AddUser = () => {
                 name="gender"
                 value="Male"
                 onChange={(e) => setGender(e.target.value)}
+                checked={gender}
+                readOnly
+                disabled
               />
               <span className="label-text">Male</span>
             </label>
@@ -93,6 +110,9 @@ const AddUser = () => {
                 name="gender"
                 value="Female"
                 onChange={(e) => setGender(e.target.value)}
+                checked={gender}
+                readOnly
+                disabled
               />
               <span className="label-text">Female</span>
             </label>
@@ -107,8 +127,8 @@ const AddUser = () => {
             name="birthday"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
-            required
-            pattern="\d{2}-\d{2}-\d{4} "
+            readOnly
+            disabled
           ></input>
           <p className="font-normal text-black text-base capitalize my-2">
             address
@@ -118,6 +138,8 @@ const AddUser = () => {
             placeholder="Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            readOnly
+            disabled
           ></textarea>
           <p className="font-normal text-black text-base capitalize my-2">
             nationality
@@ -128,8 +150,9 @@ const AddUser = () => {
             required
             value={national}
             onChange={(e) => setNational(e.target.value)}
+            disabled
           >
-            <option disabled className="capitalize my-4">
+            <option disabled value="national" className="capitalize my-4">
               select nationality
             </option>
             <option value="Indonesia">Indonesia</option>
@@ -139,9 +162,6 @@ const AddUser = () => {
             <option value="Amerika Serikat">Amerika Serikat</option>
           </select>
           <div className="flex flex-wrap gap-4">
-            <button type="submit" className="btn btn-success my-4 text-white">
-              Save
-            </button>
             <Link to="/">
               <button className="btn btn-warning my-4 text-white">Back</button>
             </Link>
@@ -152,4 +172,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default DetailsUser;
