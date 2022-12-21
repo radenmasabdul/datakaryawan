@@ -95,7 +95,7 @@ const DetailsUser = () => {
                 name="gender"
                 value="Male"
                 onChange={(e) => setGender(e.target.value)}
-                checked={gender}
+                checked={gender === "Male"}
                 readOnly
                 disabled
               />
@@ -110,7 +110,7 @@ const DetailsUser = () => {
                 name="gender"
                 value="Female"
                 onChange={(e) => setGender(e.target.value)}
-                checked={gender}
+                checked={gender === "Female"}
                 readOnly
                 disabled
               />

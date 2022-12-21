@@ -102,7 +102,7 @@ const EditUser = () => {
                 name="gender"
                 value="Male"
                 onChange={(e) => setGender(e.target.value)}
-                checked
+                checked={gender === "Male"}
               />
               <span className="label-text">Male</span>
             </label>
@@ -115,7 +115,7 @@ const EditUser = () => {
                 name="gender"
                 value="Female"
                 onChange={(e) => setGender(e.target.value)}
-                checked
+                checked={gender === "Female"}
               />
               <span className="label-text">Female</span>
             </label>
