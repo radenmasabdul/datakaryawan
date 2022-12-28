@@ -3,31 +3,31 @@ import mongoose from "mongoose";
 const User = mongoose.Schema({
     nik:{
         type: String,
-        required: true
+        required: true,
     },
     name:{
         type: String,
-        required: true
+        required: true,
     },
     age:{
         type: String,
-        required: true
+        required: false,
     },
     birthday:{
         type: String,
-        required: true
+        required: false,
     },
     gender:{
         type: String,
-        required: true,
+        required: false,
     },
     address: {
         type: String,
-        required: true,
+        required: false,
     },
     national: {
         type: String,
-        required: true,
+        required: false,
     }
 });
 
