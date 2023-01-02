@@ -155,29 +155,6 @@ const UserList = () => {
               ))}
             </tbody>
           </table>
-          <p>
-            Total Rows: {rows} Page: {rows ? page + 1 : 0} of {pages}
-          </p>
-          <p className="has-text-centered has-text-danger">{msg}</p>
-          <nav
-            className="pagination is-centered"
-            key={rows}
-            role="navigation"
-            aria-label="pagination"
-          >
-            <ReactPaginate
-              previousLabel={"< Prev"}
-              nextLabel={"Next >"}
-              pageCount={Math.min(10, pages)}
-              onPageChange={changePage}
-              containerClassName={"pagination-list"}
-              pageLinkClassName={"pagination-link"}
-              previousLinkClassName={"pagination-previous"}
-              nextLinkClassName={"pagination-next"}
-              activeLinkClassName={"pagination-link is-current"}
-              disabledLinkClassName={"pagination-link is-disabled"}
-            />
-          </nav>
         </section>
       </main>
     </>

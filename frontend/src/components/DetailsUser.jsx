@@ -104,6 +104,18 @@ const DetailsUser = () => {
             disabled
           ></input>
           <p className="font-normal text-black text-base capitalize my-2">
+            Age
+          </p>
+          <input
+            className="input w-full input-bordered my-4"
+            type="text"
+            id="age"
+            name="age"
+            value={age}
+            readOnly
+            disabled
+          />
+          <p className="font-normal text-black text-base capitalize my-2">
             address
           </p>
           <textarea

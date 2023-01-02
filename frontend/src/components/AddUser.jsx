@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const AddUser = () => {
   const [nik, setNik] = useState("");
   const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState("");
   const [birthday, setBirthday] = useState("");
   const [gender, setGender] = useState("");
   const [address, setAddress] = useState("");
@@ -39,6 +39,16 @@ const AddUser = () => {
     }
   };
 
+  //function find age
+  function findAge() {
+    var day = document.getElementById("birthday").value;
+    var birthDate = new Date(day);
+    var today = new Date();
+    var Age = today.getTime() - birthDate.getTime();
+    Age = Math.floor(Age / (1000 * 60 * 60 * 24 * 365.25));
+    document.getElementById("age").value = Age;
+  }
+
   return (
     <>
       <form
@@ -60,6 +70,7 @@ const AddUser = () => {
             required
             value={nik}
             onChange={(e) => setNik(e.target.value)}
+            maxLength={5}
           />
           <p className="font-normal text-black text-base capitalize">
             full name
@@ -110,6 +121,21 @@ const AddUser = () => {
             required
             pattern="\d{2}-\d{2}-\d{4} "
           ></input>
+          <p className="font-normal text-black text-base capitalize my-2">
+            Age
+          </p>
+          <input
+            className="input w-full input-bordered my-4"
+            type="text"
+            name="age"
+            id="age"
+            value={age}
+            readOnly
+            onMouseOver={(e) => {
+              findAge(e.target.value);
+              setAge(e.target.value);
+            }}
+          />
           <p className="font-normal text-black text-base capitalize my-2">
             address
           </p>

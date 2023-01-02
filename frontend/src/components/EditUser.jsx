@@ -132,6 +132,18 @@ const EditUser = () => {
             onChange={(e) => setBirthday(e.target.value)}
           ></input>
           <p className="font-normal text-black text-base capitalize my-2">
+            Age
+          </p>
+          <input
+            className="input w-full input-bordered my-4"
+            type="text"
+            id="age"
+            name="age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            readOnly
+          />
+          <p className="font-normal text-black text-base capitalize my-2">
             address
           </p>
           <textarea
