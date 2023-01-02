@@ -8,7 +8,7 @@ Simple CRUD using MERN Stack technology. Can add data, view, change, delete and 
 <p align="left"> 
   <img
       src="https://github.com/radenmasabdul/logo/blob/7718c966b2ab9aaa6580905fd80e8bb2ee6f454a/Axios.svg.png" alt="axios"
-      width="120" height="40" />
+      width="150" height="40" />
   <img
       src="https://github.com/radenmasabdul/logo/blob/7718c966b2ab9aaa6580905fd80e8bb2ee6f454a/css3.svg" alt="css3"
       width="40" height="40" />
