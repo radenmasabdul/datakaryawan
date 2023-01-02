@@ -45,8 +45,13 @@ This is an example of how you may give instructions on setting up your project l
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
+Clone this repo
+  ```sh
+  git@github.com:radenmasabdul/datakaryawan.git
 
-first you need to install react js
+  ```
+
+Install react js
   ```sh
   npx create-react-app my-app
 
@@ -64,9 +69,5 @@ The page will reload when you make changes as long as you don't
 forget to press ctrl + s.
 You may also see any lint errors in the console.
 
-
-
 Builds the app for production to the build folder.
-
-
 Your app is ready to be deployed!
